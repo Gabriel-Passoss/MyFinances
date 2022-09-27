@@ -18,7 +18,7 @@ class BalanceCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         onTap: () => _enterSummaryPage(context),
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           width: 350,
           height: 120,
           decoration: BoxDecoration(
