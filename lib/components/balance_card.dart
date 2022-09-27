@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import '../models/transaction.dart';
 
 import '../models/app_routes.dart';
 
 class BalanceCard extends StatelessWidget {
-  const BalanceCard({super.key});
+  final double balance;
+  final List<Transaction> transactions;
+
+  const BalanceCard(
+      {super.key, required this.balance, required this.transactions});
 
   void _enterSummaryPage(BuildContext context) {
     Navigator.of(context).pushNamed(
       AppRoutes.SUMMARY,
+      arguments: transactions,
     );
   }
 
@@ -42,9 +48,9 @@ class BalanceCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Text(
-                    '\$27.802,05',
-                    style: TextStyle(
+                  Text(
+                    balance.toStringAsFixed(2),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontFamily: 'PublicSans',
                       fontWeight: FontWeight.w600,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_finances/components/transaction_card.dart';
+import 'package:my_finances/models/transaction.dart';
+import '../components/credit_card.dart';
+import '../components/transaction_card.dart';
 
 import '../models/app_routes.dart';
 
@@ -12,6 +14,9 @@ class Summary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Transaction> transactions =
+        ModalRoute.of(context)!.settings.arguments as List<Transaction>;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black12,
@@ -43,7 +48,7 @@ class Summary extends StatelessWidget {
         ],
       ),
       body: Container(
-        margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
+        margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -56,10 +61,10 @@ class Summary extends StatelessWidget {
                     Text(
                       'Seus Cartões',
                       style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
-                          fontSize: 30,
-                          fontFamily: 'PublicSans',
-                          fontWeight: FontWeight.w600),
+                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 30,
+                        fontFamily: 'PublicSans',
+                      ),
                     ),
                     Text(
                       'Você tem 3 cartões ativos',
@@ -82,83 +87,7 @@ class Summary extends StatelessWidget {
                     ))
               ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              margin: const EdgeInsets.only(top: 25),
-              width: 400,
-              height: 200,
-              decoration: BoxDecoration(
-                  color: const Color.fromRGBO(103, 40, 255, 1),
-                  borderRadius: BorderRadius.circular(30)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    width: 60,
-                    height: 60,
-                    child: Image.asset('assets/images/chip_cartao.png'),
-                  ),
-                  Container(
-                    child: const Text(
-                      '4562 1122 4595 7852',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(top: 10),
-                            child: const Text(
-                              'Gabriel dos Passos',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 10),
-                            child: const Text(
-                              'Data de expiração',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 5),
-                            child: const Text(
-                              '05/28',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          )
-                        ],
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        width: 60,
-                        height: 60,
-                        child: Image.asset('assets/images/mastercard.png'),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            CreditCard(),
             Container(
               margin: const EdgeInsets.only(top: 20),
               child: Text(
@@ -171,7 +100,19 @@ class Summary extends StatelessWidget {
                 ),
               ),
             ),
-            const TransactionCard()
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              height: 331,
+              width: 500,
+              child: ListView.builder(
+                  itemCount: transactions.length,
+                  itemBuilder: (BuildContext context, index) {
+                    final transaction = transactions[index];
+                    return TransactionCard(
+                      transaction: transaction,
+                    );
+                  }),
+            )
           ],
         ),
       ),

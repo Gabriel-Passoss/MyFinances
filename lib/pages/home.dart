@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import '../models/transaction.dart';
 import '../components/Operations.dart';
 import '../components/balance_card.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -10,6 +13,49 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final filters = ['Esta semana', 'Este mês', 'Este ano'];
   var filterSelected = ValueNotifier('Esta semana');
+
+  final List<Transaction> _transactions = [
+    Transaction(
+      title: 'Paypal',
+      value: 2500,
+      type: 'expense',
+      date: DateTime.now(),
+    ),
+    Transaction(
+      title: 'Google Play',
+      value: 50,
+      type: 'expense',
+      date: DateTime.now(),
+    ),
+    Transaction(
+      title: 'Cartão de crédito',
+      value: 15000,
+      type: 'expense',
+      date: DateTime.now(),
+    ),
+    Transaction(
+      title: 'Prestação da CG',
+      value: 500,
+      type: 'expense',
+      date: DateTime.now(),
+    )
+  ];
+
+  double get _balance {
+    double balance = 0;
+
+    for (var i = 0; i < _transactions.length; i++) {
+      balance += _transactions[i].value;
+    }
+    return balance;
+  }
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((transaction) {
+      return transaction.date
+          .isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +81,10 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Container(
-        margin: EdgeInsets.only(top: 30),
+        margin: const EdgeInsets.only(top: 30),
         child: Column(
           children: [
-            Container(
+            SizedBox(
               width: 350,
               child: Container(
                 margin: const EdgeInsets.only(bottom: 20),
@@ -53,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const BalanceCard(),
+            BalanceCard(balance: _balance, transactions: _recentTransactions),
             const Operations(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),

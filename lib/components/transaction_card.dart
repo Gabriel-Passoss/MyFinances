@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_finances/models/transaction.dart';
 
 class TransactionCard extends StatelessWidget {
-  const TransactionCard({super.key});
+  final Transaction transaction;
+
+  const TransactionCard({super.key, required this.transaction});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +34,9 @@ class TransactionCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    child: const Text(
-                      'Paypal',
-                      style: TextStyle(
+                    child: Text(
+                      transaction.title,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -51,9 +54,9 @@ class TransactionCard extends StatelessWidget {
               ),
             ],
           ),
-          const Text(
-            '+R\$2.000',
-            style: TextStyle(
+          Text(
+            'R\$${transaction.value.toStringAsFixed(2)}',
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 14,
             ),
