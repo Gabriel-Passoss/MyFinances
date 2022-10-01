@@ -7,8 +7,11 @@ class BalanceCard extends StatelessWidget {
   final double balance;
   final List<Transaction> transactions;
 
-  const BalanceCard(
-      {super.key, required this.balance, required this.transactions});
+  const BalanceCard({
+    super.key,
+    required this.balance,
+    required this.transactions,
+  });
 
   void _enterSummaryPage(BuildContext context) {
     Navigator.of(context).pushNamed(
@@ -38,18 +41,16 @@ class BalanceCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: Text(
-                      '23 de março, 2022',
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.6),
-                        fontFamily: 'PublicSans',
-                        fontSize: 13,
-                      ),
+                  Text(
+                    '23 de março, 2022',
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.6),
+                      fontFamily: 'PublicSans',
+                      fontSize: 13,
                     ),
                   ),
                   Text(
-                    balance.toStringAsFixed(2),
+                    'R\$${balance.toStringAsFixed(2)}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontFamily: 'PublicSans',

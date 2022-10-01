@@ -87,7 +87,7 @@ class Summary extends StatelessWidget {
                     ))
               ],
             ),
-            CreditCard(),
+            const CreditCard(),
             Container(
               margin: const EdgeInsets.only(top: 20),
               child: Text(
@@ -100,18 +100,18 @@ class Summary extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              height: 331,
-              width: 500,
-              child: ListView.builder(
-                  itemCount: transactions.length,
-                  itemBuilder: (BuildContext context, index) {
-                    final transaction = transactions[index];
-                    return TransactionCard(
-                      transaction: transaction,
-                    );
-                  }),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(top: 10),
+                child: ListView.builder(
+                    itemCount: transactions.length,
+                    itemBuilder: (BuildContext context, index) {
+                      final transaction = transactions[index];
+                      return TransactionCard(
+                        transaction: transaction,
+                      );
+                    }),
+              ),
             )
           ],
         ),

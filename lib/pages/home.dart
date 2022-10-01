@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
-import '../components/Operations.dart';
+import '../components/operations.dart';
 import '../components/balance_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,9 +44,10 @@ class _HomePageState extends State<HomePage> {
   double get _balance {
     double balance = 0;
 
-    for (var i = 0; i < _transactions.length; i++) {
-      balance += _transactions[i].value;
+    for (var index = 0; index < _transactions.length; index++) {
+      balance += _transactions[index].value;
     }
+
     return balance;
   }
 
@@ -116,26 +117,27 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   ValueListenableBuilder(
-                      valueListenable: filterSelected,
-                      builder: (BuildContext context, String value, _) {
-                        return DropdownButton(
-                          dropdownColor: Colors.grey.shade900,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                          value: (value.isEmpty) ? null : value,
-                          onChanged: (selected) =>
-                              filterSelected.value = selected.toString(),
-                          items: filters
-                              .map((filter) => DropdownMenuItem(
-                                  value: filter,
-                                  child: Text(
-                                    filter,
-                                  )))
-                              .toList(),
-                        );
-                      }),
+                    valueListenable: filterSelected,
+                    builder: (BuildContext context, String value, _) {
+                      return DropdownButton(
+                        dropdownColor: Colors.grey.shade900,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                        value: (value.isEmpty) ? null : value,
+                        onChanged: (selected) =>
+                            filterSelected.value = selected.toString(),
+                        items: filters
+                            .map((filter) => DropdownMenuItem(
+                                value: filter,
+                                child: Text(
+                                  filter,
+                                )))
+                            .toList(),
+                      );
+                    },
+                  ),
                 ],
               ),
             )

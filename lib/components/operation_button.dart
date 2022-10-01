@@ -23,13 +23,10 @@ class OperationButton extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.grey[700]!.withOpacity(0.4),
               borderRadius: BorderRadius.circular(18)),
-          child: IconButton(
-            onPressed: () {},
-            icon: Icon(
-              icon,
-              color: color,
-              size: 27,
-            ),
+          child: Icon(
+            icon,
+            color: color,
+            size: 27,
           ),
         ),
         Text(

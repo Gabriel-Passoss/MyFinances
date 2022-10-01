@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         canvasColor: Colors.black12,
       ),
       routes: {
-        AppRoutes.HOME: (ctx) => HomePage(),
+        AppRoutes.HOME: (ctx) => const HomePage(),
         AppRoutes.SUMMARY: (ctx) => const Summary(),
       },
     );
