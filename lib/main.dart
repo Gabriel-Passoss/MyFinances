@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         AppRoutes.HOME: (ctx) => const HomePage(),
-        AppRoutes.SUMMARY: (ctx) => const Summary(),
+        AppRoutes.SUMMARY: (ctx) => Summary(),
       },
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
-import '../components/operations.dart';
-import '../components/balance_card.dart';
+import '../components/home/operations.dart';
+import '../components/home/balance_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,49 +14,49 @@ class _HomePageState extends State<HomePage> {
   final filters = ['Esta semana', 'Este mês', 'Este ano'];
   var filterSelected = ValueNotifier('Esta semana');
 
-  final List<Transaction> _transactions = [
-    Transaction(
-      title: 'Paypal',
-      value: 2500,
-      type: 'expense',
-      date: DateTime.now(),
-    ),
-    Transaction(
-      title: 'Google Play',
-      value: 50,
-      type: 'expense',
-      date: DateTime.now(),
-    ),
-    Transaction(
-      title: 'Cartão de crédito',
-      value: 15000,
-      type: 'expense',
-      date: DateTime.now(),
-    ),
-    Transaction(
-      title: 'Prestação da CG',
-      value: 500,
-      type: 'expense',
-      date: DateTime.now(),
-    )
-  ];
+  // final List<Transaction> _transactions = [
+  //   Transaction(
+  //     title: 'Paypal',
+  //     value: 2500,
+  //     type: 'expense',
+  //     date: DateTime.now(),
+  //   ),
+  //   Transaction(
+  //     title: 'Google Play',
+  //     value: 50,
+  //     type: 'expense',
+  //     date: DateTime.now(),
+  //   ),
+  //   Transaction(
+  //     title: 'Cartão de crédito',
+  //     value: 15000,
+  //     type: 'expense',
+  //     date: DateTime.now(),
+  //   ),
+  //   Transaction(
+  //     title: 'Prestação da CG',
+  //     value: 500,
+  //     type: 'expense',
+  //     date: DateTime.now(),
+  //   )
+  // ];
 
-  double get _balance {
-    double balance = 0;
+  // double get _balance {
+  //   double balance = 0;
 
-    for (var index = 0; index < _transactions.length; index++) {
-      balance += _transactions[index].value;
-    }
+  //   for (var index = 0; index < _transactions.length; index++) {
+  //     balance += _transactions[index].value;
+  //   }
 
-    return balance;
-  }
+  //   return balance;
+  // }
 
-  List<Transaction> get _recentTransactions {
-    return _transactions.where((transaction) {
-      return transaction.date
-          .isAfter(DateTime.now().subtract(const Duration(days: 7)));
-    }).toList();
-  }
+  // List<Transaction> get _recentTransactions {
+  //   return _transactions.where((transaction) {
+  //     return transaction.date
+  //         .isAfter(DateTime.now().subtract(const Duration(days: 7)));
+  //   }).toList();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            BalanceCard(balance: _balance, transactions: _recentTransactions),
+            BalanceCard(balance: 5),
             const Operations(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'operation_button.dart';
 
-import 'modals/send_modal.dart';
+import '../modals/send_modal.dart';
 
 class Operations extends StatelessWidget {
   const Operations({super.key});

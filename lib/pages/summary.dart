@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:my_finances/models/transaction.dart';
-import '../components/credit_card.dart';
-import '../components/transaction_card.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:my_finances/controllers/transaction_controller.dart';
+
+import '../models/transaction.dart';
+import '../repositories/transactions_repository.dart';
+
+import '../components/summary/credit_card.dart';
+import '../components/summary/transaction_card.dart';
 
 import '../models/app_routes.dart';
 
 class Summary extends StatelessWidget {
-  const Summary({super.key});
+  Summary({super.key});
 
   void _backToHome(BuildContext context) {
     Navigator.of(context).pop();
   }
 
+  // final transactions = TransactionsRepository().loadTransactions();
+  final controller = singletonController;
+
   @override
   Widget build(BuildContext context) {
-    final List<Transaction> transactions =
-        ModalRoute.of(context)!.settings.arguments as List<Transaction>;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black12,
@@ -102,17 +107,18 @@ class Summary extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.only(top: 10),
-                child: ListView.builder(
-                    itemCount: transactions.length,
-                    itemBuilder: (BuildContext context, index) {
-                      final transaction = transactions[index];
-                      return TransactionCard(
-                        transaction: transaction,
-                      );
-                    }),
+                margin: const EdgeInsets.only(top: 10),
+                child: Observer(builder: (context) {
+                  return ListView.builder(
+                      itemCount: controller.transactions.length,
+                      itemBuilder: (BuildContext context, index) {
+                        return TransactionCard(
+                          transaction: controller.transactions[index],
+                        );
+                      });
+                }),
               ),
-            )
+            ),
           ],
         ),
       ),

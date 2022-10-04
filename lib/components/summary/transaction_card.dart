@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:my_finances/models/transaction.dart';
 
-class TransactionCard extends StatelessWidget {
-  final Transaction transaction;
+import '../../controllers/transaction_controller.dart';
 
-  const TransactionCard({super.key, required this.transaction});
+class TransactionCard extends StatelessWidget {
+  TransactionCard({super.key, required this.transaction});
+
+  final Transaction transaction;
+  final controller = singletonController;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 20),
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       height: 80,
       width: 400,
       decoration: BoxDecoration(
-          color: Colors.grey[700]!.withOpacity(0.7),
-          borderRadius: BorderRadius.circular(20)),
+        color: Colors.grey[700]!.withOpacity(0.7),
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -54,13 +58,27 @@ class TransactionCard extends StatelessWidget {
               ),
             ],
           ),
-          Text(
-            'R\$${transaction.value.toStringAsFixed(2)}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-            ),
-          )
+          Row(
+            children: [
+              Text(
+                transaction.type == "deposit"
+                    ? '+ R\$${transaction.value.toStringAsFixed(2)}'
+                    : '- R\$${transaction.value.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
+              IconButton(
+                  onPressed: () {
+                    controller.removeTransaction(transaction);
+                  },
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.red[400],
+                  ))
+            ],
+          ),
         ],
       ),
     );

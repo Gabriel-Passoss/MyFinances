@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import '../models/transaction.dart';
+import '../../models/transaction.dart';
 
-import '../models/app_routes.dart';
+import '../../models/app_routes.dart';
 
 class BalanceCard extends StatelessWidget {
   final double balance;
-  final List<Transaction> transactions;
 
   const BalanceCard({
     super.key,
     required this.balance,
-    required this.transactions,
   });
 
   void _enterSummaryPage(BuildContext context) {
-    Navigator.of(context).pushNamed(
-      AppRoutes.SUMMARY,
-      arguments: transactions,
-    );
+    Navigator.of(context).pushNamed(AppRoutes.SUMMARY);
   }
 
   @override
