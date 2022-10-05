@@ -3,8 +3,6 @@ import '../../controllers/transaction_controller.dart';
 
 import '../../models/transaction.dart';
 
-enum TransactionTypes { Entrada, Saida }
-
 class SendModal extends StatefulWidget {
   const SendModal({super.key});
 
@@ -26,10 +24,8 @@ class _SendModalState extends State<SendModal> {
     'Transporte',
     'Cinema'
   ];
-  TransactionTypes transactionTypes = TransactionTypes.Saida;
 
   var categorySelected = ValueNotifier('Banco');
-  var transactionTypeSelected = "";
 
   final controller = singletonController;
 
@@ -124,76 +120,29 @@ class _SendModalState extends State<SendModal> {
                         },
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ValueListenableBuilder(
-                            valueListenable: categorySelected,
-                            builder: (BuildContext context, String value, _) {
-                              return DropdownButton(
-                                dropdownColor: Colors.grey.shade900,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                                value: (value.isEmpty) ? null : value,
-                                onChanged: (selected) => categorySelected
-                                    .value = selected.toString(),
-                                items: filters
-                                    .map((filter) => DropdownMenuItem(
-                                        value: filter,
-                                        child: Text(
-                                          filter,
-                                        )))
-                                    .toList(),
-                              );
-                            },
-                          ),
-                          Column(
-                            children: [
-                              Radio(
-                                  value: 'deposit',
-                                  groupValue: transactionTypeSelected,
-                                  onChanged: (selected) {
-                                    setState(() {
-                                      transactionTypeSelected =
-                                          selected.toString();
-                                    });
-                                  }),
-                              const Text(
-                                'Entrada',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                ),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Radio(
-                                  value: 'cashOut',
-                                  groupValue: transactionTypeSelected,
-                                  onChanged: (selected) {
-                                    setState(() {
-                                      transactionTypeSelected =
-                                          selected.toString();
-                                    });
-                                  }),
-                              const Text(
-                                'Saída',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
+                      ValueListenableBuilder(
+                        valueListenable: categorySelected,
+                        builder: (BuildContext context, String value, _) {
+                          return DropdownButton(
+                            dropdownColor: Colors.grey.shade900,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                            value: (value.isEmpty) ? null : value,
+                            onChanged: (selected) =>
+                                categorySelected.value = selected.toString(),
+                            items: filters
+                                .map((filter) => DropdownMenuItem(
+                                    value: filter,
+                                    child: Text(
+                                      filter,
+                                    )))
+                                .toList(),
+                          );
+                        },
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
                           var formValid =
@@ -207,7 +156,7 @@ class _SendModalState extends State<SendModal> {
                             Transaction(
                                 title: titleInput.text,
                                 value: double.parse(valueInput.text),
-                                type: transactionTypeSelected,
+                                type: 'cashOut',
                                 category: categorySelected.value,
                                 date: DateTime.now()),
                           );

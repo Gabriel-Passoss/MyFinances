@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'operation_button.dart';
 
+import '../modals/deposit_modal.dart';
 import '../modals/send_modal.dart';
 
 class Operations extends StatelessWidget {
@@ -14,10 +16,18 @@ class Operations extends StatelessWidget {
         });
   }
 
+  _openDepositModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return const DepositModal();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 30),
+      margin: const EdgeInsets.only(top: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -30,20 +40,24 @@ class Operations extends StatelessWidget {
               title: 'Saída',
             ),
           ),
-          OperationButton(
-            icon: Icons.arrow_downward,
-            color: Colors.green.shade400,
-            title: 'Entrada',
+          InkWell(
+            borderRadius: BorderRadius.circular(15),
+            onTap: () => _openDepositModal(context),
+            child: OperationButton(
+              icon: Icons.arrow_downward,
+              color: Colors.green.shade400,
+              title: 'Entrada',
+            ),
           ),
           OperationButton(
-            icon: Icons.attach_money_outlined,
+            icon: Icons.pix,
             color: Colors.amber.shade500,
-            title: "Empréstimo",
+            title: 'Pix',
           ),
           OperationButton(
-            icon: Icons.cloud_outlined,
+            icon: FontAwesomeIcons.barcode,
             color: Colors.blueGrey.shade400,
-            title: 'Completar',
+            title: 'Boleto',
           ),
         ],
       ),

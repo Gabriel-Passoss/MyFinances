@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:my_finances/controllers/transaction_controller.dart';
 import '../models/transaction.dart';
 import '../components/home/operations.dart';
 import '../components/home/balance_card.dart';
@@ -14,49 +16,7 @@ class _HomePageState extends State<HomePage> {
   final filters = ['Esta semana', 'Este mês', 'Este ano'];
   var filterSelected = ValueNotifier('Esta semana');
 
-  // final List<Transaction> _transactions = [
-  //   Transaction(
-  //     title: 'Paypal',
-  //     value: 2500,
-  //     type: 'expense',
-  //     date: DateTime.now(),
-  //   ),
-  //   Transaction(
-  //     title: 'Google Play',
-  //     value: 50,
-  //     type: 'expense',
-  //     date: DateTime.now(),
-  //   ),
-  //   Transaction(
-  //     title: 'Cartão de crédito',
-  //     value: 15000,
-  //     type: 'expense',
-  //     date: DateTime.now(),
-  //   ),
-  //   Transaction(
-  //     title: 'Prestação da CG',
-  //     value: 500,
-  //     type: 'expense',
-  //     date: DateTime.now(),
-  //   )
-  // ];
-
-  // double get _balance {
-  //   double balance = 0;
-
-  //   for (var index = 0; index < _transactions.length; index++) {
-  //     balance += _transactions[index].value;
-  //   }
-
-  //   return balance;
-  // }
-
-  // List<Transaction> get _recentTransactions {
-  //   return _transactions.where((transaction) {
-  //     return transaction.date
-  //         .isAfter(DateTime.now().subtract(const Duration(days: 7)));
-  //   }).toList();
-  // }
+  final controller = singletonController;
 
   @override
   Widget build(BuildContext context) {
@@ -82,25 +42,26 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Container(
-        margin: const EdgeInsets.only(top: 30),
+        padding: const EdgeInsets.all(15),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: 350,
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 20),
-                child: Text(
-                  'Seu Balanço',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
-                    fontSize: 30,
-                    fontFamily: 'PublicSans',
-                  ),
+            const SizedBox(width: 350),
+            Container(
+              margin: const EdgeInsets.only(bottom: 20),
+              child: Text(
+                'Seu Balanço',
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Colors.white.withOpacity(0.8),
+                  fontSize: 30,
+                  fontFamily: 'PublicSans',
                 ),
               ),
             ),
-            BalanceCard(balance: 5),
+            Observer(builder: (_) {
+              return BalanceCard(balance: controller.getBalance());
+            }),
             const Operations(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -130,10 +91,9 @@ class _HomePageState extends State<HomePage> {
                             filterSelected.value = selected.toString(),
                         items: filters
                             .map((filter) => DropdownMenuItem(
-                                value: filter,
-                                child: Text(
-                                  filter,
-                                )))
+                                  value: filter,
+                                  child: Text(filter),
+                                ))
                             .toList(),
                       );
                     },

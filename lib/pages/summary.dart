@@ -17,7 +17,6 @@ class Summary extends StatelessWidget {
     Navigator.of(context).pop();
   }
 
-  // final transactions = TransactionsRepository().loadTransactions();
   final controller = singletonController;
 
   @override
@@ -110,10 +109,10 @@ class Summary extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 10),
                 child: Observer(builder: (context) {
                   return ListView.builder(
-                      itemCount: controller.transactions.length,
+                      itemCount: controller.recentTransactions.length,
                       itemBuilder: (BuildContext context, index) {
                         return TransactionCard(
-                          transaction: controller.transactions[index],
+                          transaction: controller.recentTransactions[index],
                         );
                       });
                 }),
